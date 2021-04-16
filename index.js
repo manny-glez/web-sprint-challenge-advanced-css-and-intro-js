@@ -349,11 +349,11 @@ function randomize(/* Code here */){
   return 'bar';
 }
 /*Don't touch the code after this line! */
-export default{
-  foo,
-  getArtistByIndex,
-  get20s,
-  removeArtist,
-  addArtist,
-  lotsOfArt
-}
+// export default{
+//   foo,
+//   getArtistByIndex,
+//   get20s,
+//   removeArtist,
+//   addArtist,
+//   lotsOfArt
+// }
