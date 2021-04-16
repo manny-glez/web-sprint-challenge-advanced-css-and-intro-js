@@ -209,16 +209,32 @@ Practice accessing data above by console.log-ing following items:
 
 //(1) Name of the first artist (0th index) in the array
 
+console.log(artists[0].name)
+
 
 //(2) Bio of the third artist (2nd index) in the array 
 
+console.log(artists[2].bio)
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 2: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 (no function needed) 
 There is a typo in your dataset 😱 The 9th artist, Vincent Van Gogh is currently Vincent Van Dough. Use an array method to fix this issue and console.log() to check your work. */
 
+/* UNDERSTAND
+fix typo in the name property of object at the 8th index
 
+PLAN
+
+get into artists array
+go inside of the 8th index in the artists array
+access the name property 
+change name to the right spelling
+*/
+
+artists[8].name = "Vincent Van Gogh"
+
+console.log(artists[8])
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 3: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀  
  Use getArtistByIndex to do the following:
@@ -228,11 +244,16 @@ There is a typo in your dataset 😱 The 9th artist, Vincent Van Gogh is current
  
  Example, if getArtistByIndex is invoked with the artists array and the number 0, it will return `the artist at index 0 is Amedeo Modigliani` */
 
-function getArtistByIndex(/*Your Code Here*/) {
-  /*Your Code Here*/
+/* UNDERSTAND
+use function to return a the string `the artist at index {id} is {name}`
+*/
+
+function getArtistByIndex(array, index) {
+  
+  const artist = array[index]
+
+  return `the artist at index ${artist.id} is ${artist.name}`
 }  
-
-
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use get20s to do the following: 
@@ -242,11 +263,40 @@ Use get20s to do the following:
 Example born in 1901 and died in 1959 - included -- born in 1889 and died in 1925 not included
 If correct, the function should return ["Salvador Dali", "Frida Kahlo"]*/
 
-function get20s(/*Your Code Here*/){
-  /*Your Code Here*/
+/* 
+UNDERSTAND:
+  We want a list of all the artists that lived between 1900 and 2000 (inclusive) 
+  Input: an array
+  Output: a new array with artists that lived during the 20th century
+
+PLAN:
+  Iterate through the array of artists
+  Go inside the object and access the years property to see when they lived
+  If their birth year is equal to or greater than 1900 AND
+  If their death year is equal to or less than 2000
+  Add them to the array
+*/
+
+function get20s(arr) {
+
+  const born20th = []
+
+  for(let counter = 0; counter < arr.length; counter++) {
+    let years = arr[counter].years
+
+    let birthArr = years.split(' ')
+
+    let birthYear = parseInt(birthArr[0])
+
+    let deathYear = parseInt(birthArr[2])
+
+    if(birthYear >= 1900 && deathYear <= 2000) {
+      born20th.push(arr[counter].name)
+    }
+  }
+
+  return born20th
 }
-
-
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
  Use removeArtist to do the following:
@@ -257,8 +307,23 @@ function get20s(/*Your Code Here*/){
  
  For example, if removeArtist is invoked with the artists array and the number 0, it will remove Amedeo Modigliani from our dataset and return the number 19. */
 
-function removeArtist(/*Your Code Here*/){
-   /*Your Code Here*/
+ /*
+UNDERSTAND
+Use funcuton removeArtist to remove an artist from the arry using disired index
+
+PLAN
+find by index
+
+remove found item
+ */
+
+function removeArtist(artists, removeArtist){
+
+   const index = artists.indexOf(removeArtist)
+
+   artists.splice(index, 1)
+
+   return artists.length
 }
    
 
@@ -278,8 +343,18 @@ Use addArtist to do the following:
 
 Example: addArtist(artists) should return the artists array with the above object added to the end of the array. */
 
-function addArtist(/*Your Code Here*/){
-    /*Your Code Here*/
+function addArtist(artists){
+    const fakeArtist = {
+      id: 20,
+      name: "Emmanuel Gonzalez", 
+      years: "2002 - 2021",
+      genre: "Web Design", 
+      nationality: "American",
+      bio: "lorem ipsum"
+    }
+    artists.unshift(fakeArtist)
+
+    return artists
   }
 
   
@@ -291,11 +366,29 @@ Use lotsOfArt to do the following:
 
 For example lotsOfArt(artists); will return ["Amedeo Modigliani", "Rene Magritte", ... "Albrecht Dürer"]*/
 
-function lotsOfArt(/*Your Code Here*/){
-  /*Your Code Here*/
+/* UNDERSTAND:
+Input: an array
+Output: new array of all artists with more than 100 paintings
+
+PLAN:
+  loop through the objects and check the paintings property
+  if it is greater than 100
+  push that artist's name to the new array
+  return the new array */
+
+
+function lotsOfArt(arr){
+
+  const moreThan100 = []
+
+  for(let i = 0; i < arr.length; i++) {
+    if(arr[i].paintings > 100) {
+      moreThan100.push(arr[i].name)
+    }
+  }
+
+  return moreThan100
 }
-
-
 
 
 // 🎨🎨 STRETCH 🎨🎨//
@@ -349,11 +442,12 @@ function randomize(/* Code here */){
   return 'bar';
 }
 /*Don't touch the code after this line! */
-// export default{
-//   foo,
-//   getArtistByIndex,
-//   get20s,
-//   removeArtist,
-//   addArtist,
-//   lotsOfArt
-// }
+
+export default{
+  foo,
+  getArtistByIndex,
+  get20s,
+  removeArtist,
+  addArtist,
+  lotsOfArt
+}
